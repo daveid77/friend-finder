@@ -12,18 +12,18 @@ npm install
 
 ## Available Node Commands and URLs
 
-** Local ** 
+**Local:** 
 
 * `node server.js` 
 * `http://localhost:8080/`
 
-** Heroku ** 
+**Heroku Deployment:** 
 
 * `https://friendfinder-davidm.herokuapp.com/`
 
 ## Misc Notes
 
-* 
+* Pushes to Github repo autodeploy to Heroku (sweet).
 
 ## Author
 

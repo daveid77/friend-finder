@@ -1,5 +1,6 @@
-// HEROKU APP: https://friendfinder-davidm.herokuapp.com/
-// HEROKU GIT: https://git.heroku.com/friendfinder-davidm.git 
+// GITHUB REPO: https://github.com/dbmarshall/friend-finder.git 
+// HEROKU APP: https://friend-finder-davidm.herokuapp.com/
+// HEROKU GIT: https://git.heroku.com/friend-finder-davidm.git 
 
 // Dependencies
 var express = require('express');
