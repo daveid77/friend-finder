@@ -12,8 +12,9 @@ module.exports = function(app) {
       console.log('req.body: ', req.body);
       console.log('req.body.name: ', req.body.name);
       console.log('req.body.scores: ', req.body.scores);
+      console.log('=========================');
     friendsData.push(req.body);
-      // console.log(friendsData);
+      console.log(friendsData);
 
   })
 
