@@ -24,15 +24,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Your Time Machine Movie Star Match</h4>
+          <h4 class="modal-title">Your Best Match</h4>
         </div>
         <div class="modal-body">
-          <p>Here's with whom you are most compatible...</p>
-          <h3><span id="match-name">Barbara Harris</span></h3>
+          <h3 style="margin-top: 0;"><span id="match-name">Barbara Harris</span></h3>
           <div style="width: 500px; height: 300px; overflow: hidden;">
             <img src="http://images6.fanpop.com/image/photos/33200000/Freaky-Friday-1976-classic-movies-33202690-475-258.jpg" style="width: 500px; height: auto;">
           </div>
-          <p>As soon as we work out the kinks in the time machine, we'll set up an appointment for the two of you to hang out in the time period photographed.</p>
+          <!-- <p>As soon as we work out the kinks in the time machine, we'll set up an appointment for the two of you to hang out in the time period photographed.</p> -->
         </div>
       </div>
 
@@ -214,7 +213,7 @@
           <p>
             <a href="/">Home</a> | 
             <a href="/api/friends">API Friends List</a> | 
-            Git Repo: https://git.heroku.com/arcane-woodland-50681.git
+            <a href="https://github.com/dbmarshall/friend-finder">GitHub Repo</a>
           </p>
         </div>
       </div>
@@ -231,31 +230,37 @@
 
       var newScores = [];
       $('select').each(function() {
-        newScores.push($(this).val());
+        newScores.push(parseInt($(this).val()));
       });
-      // console.log('scores', scores);
+      console.log('scores', newScores);
 
       var newUser = {
         name: $("#name").val().trim(),
         photoLink: $("#photo-link").val().trim(),
-        scores: newScores
+        scores: JSON.stringify(newScores)
       };
 
-      console.log(newUser);
+        console.log('var newUser: ', newUser);
 
-      $.post('/api/friends', newUser, function(data) {
+      $.post("/api/friends", newUser, function(data) {
 
-        console.log(data);
+          console.log(res.json(true)); 
 
-        $('#name').val('fuck this');
-        $('#photo-link').val('');
-        $('select').prop('selectedIndex','');
+          console.log('POST newUser: ', newUser);
 
-      });
+          console.log('data: ', data);
+
+          alert('this is not alerting :-(');
+
+        });
+
+      $('#name').val('');
+      $('#photo-link').val('');
+      $('select').prop('selectedIndex','');
 
     });
 
-</script>
+  </script>
 
 </body>
 </html>

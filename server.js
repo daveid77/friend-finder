@@ -9,7 +9,7 @@ var path = require('path');
 
 // Express Server
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 5050;
 
 // Display static files in /public/ directory
 app.use(express.static('./app/public'));

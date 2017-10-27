@@ -9,9 +9,12 @@ module.exports = function(app) {
   })
 
   app.post('/api/friends', function(req, res) {
-    console.log(req.body);
+      console.log('req.body: ', req.body);
+      console.log('req.body.name: ', req.body.name);
+      console.log('req.body.scores: ', req.body.scores);
     friendsData.push(req.body);
-    // console.log(friendsData);
+      // console.log(friendsData);
+
   })
 
 }
