@@ -25,6 +25,10 @@ npm install
 
 * Pushes to Github repo autodeploy to Heroku (sweet).
 
+## Shortcomings
+
+* No validation of photo link.
+
 ## Author
 
 * **David Morse** ([dbmarshall.github.io](https://dbmarshall.github.io))
