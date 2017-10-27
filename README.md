@@ -14,12 +14,12 @@ npm install
 
 **Local:** 
 
-* `node server.js` 
-* `http://localhost:8080/`
+* Run `node server.js` 
+* Load `http://localhost:8080/`
 
 **Heroku Deployment:** 
 
-* `https://friendfinder-davidm.herokuapp.com/`
+* Load `https://friendfinder-davidm.herokuapp.com/`
 
 ## Misc Notes
 
