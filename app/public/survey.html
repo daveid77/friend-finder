@@ -228,35 +228,28 @@
     $('.submit').on('click', function(event) {
       event.preventDefault();
 
-      var newScores = [];
+      var scores = [];
       $('select').each(function() {
-        newScores.push(parseInt($(this).val()));
+        scores.push(parseInt($(this).val()));
       });
-      console.log('scores', newScores);
 
       var newUser = {
         name: $("#name").val().trim(),
         photoLink: $("#photo-link").val().trim(),
-        scores: JSON.stringify(newScores)
+        scores: scores
       };
 
-        console.log('var newUser: ', newUser);
+        console.log('newUser: ', newUser);
 
       $.post("/api/friends", newUser, function(data) {
 
-          console.log(res.json(true)); 
-
           console.log('POST newUser: ', newUser);
 
-          console.log('data: ', data);
+        $('#name').val('');
+        $('#photo-link').val('');
+        $('select').prop('selectedIndex','');
 
-          alert('this is not alerting :-(');
-
-        });
-
-      $('#name').val('');
-      $('#photo-link').val('');
-      $('select').prop('selectedIndex','');
+      });
 
     });
 
