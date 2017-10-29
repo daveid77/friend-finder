@@ -23,7 +23,7 @@ npm install
 
 ## Misc Notes
 
-* HTML5 validation of survey form elements, with event.preventDefault() not invoked until after validation complete, or it would have prevented HTML5 validation. Better than [example app](https://friend-finder.herokuapp.com/survey) only checked for blank fields without utilizing HTML5 validation (or checking validity of photo URL input), I feel like it's handled elegantly, using an array for invalid form elements, but open to feedback. 
+* HTML5 validation of survey form elements, with event.preventDefault() not invoked until after validation complete, or it would have prevented HTML5 validation. Better than [example app](https://friend-finder.herokuapp.com/survey), which only checked for blank fields without utilizing HTML5 validation (including checking validity of photo URL input). I feel like it's handled elegantly, using an array for invalid form elements, but open to feedback. 
 * Github repo pushes autodeploy to Heroku.
 
 ## Shortcomings
