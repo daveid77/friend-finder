@@ -6,7 +6,7 @@ Week Seven Homework Part 1: [Node & Express Server](http://ucb.bootcampcontent.c
 
 ```
 git clone https://github.com/dbmarshall/friend-finder.git
-cd node-mysql
+cd friend-finder
 npm install
 ```
 
