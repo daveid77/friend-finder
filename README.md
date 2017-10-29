@@ -29,6 +29,7 @@ npm install
 ## Shortcomings
 
 * Didn't complete fully functioning app through the line until 10/29, a day and a half past deadline.
+* Pre-populated scores for movie stars are loosely accurate at best.  No true personality assesssment was done, so, more or less, the data is faux.
 
 ## Author
 
