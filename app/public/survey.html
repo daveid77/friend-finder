@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
   <style>
-    /*input[type="url"]:invalid {
+    /*input[type="text"]:invalid {
       background-color: pink;
     }*/
   </style>
@@ -31,7 +31,6 @@
           <div style="width: 500px; height: 400px; overflow: hidden;">
             <img id="match-photo" src="" style="width: 500px; height: auto;">
           </div>
-          <!-- <p>As soon as we work out the kinks in the time machine, we'll set up an appointment for the two of you to hang out in the time period photographed.</p> -->
         </div>
       </div>
 
@@ -86,7 +85,7 @@
                 <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
-                <option value="4" selected>4</option>
+                <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
               </select>
             </div>
@@ -99,7 +98,7 @@
                 <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
-                <option value="4" selected>4</option>
+                <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
               </select>
             </div>
@@ -113,7 +112,7 @@
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5" selected>5 (Strongly Agree)</option>
+                <option value="5">5 (Strongly Agree)</option>
               </select>
             </div>
 
@@ -126,7 +125,7 @@
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
-                <option value="5" selected>5 (Strongly Agree)</option>
+                <option value="5">5 (Strongly Agree)</option>
               </select>
             </div>
 
@@ -135,7 +134,7 @@
               <label for="question6">We can be most cruel when we feel bad about ourselves.</label>
               <select id="question6" class="form-control" required>
                 <option value="">Choose One</option>
-                <option value="1" selected>1 (Strongly Disagree)</option>
+                <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -149,7 +148,7 @@
               <select id="question7" class="form-control" required>
                 <option value="">Choose One</option>
                 <option value="1">1 (Strongly Disagree)</option>
-                <option value="2" selected>2</option>
+                <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
@@ -163,7 +162,7 @@
                 <option value="">Choose One</option>
                 <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
-                <option value="3" selected>3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
               </select>
@@ -177,7 +176,7 @@
                 <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
-                <option value="4" selected>4</option>
+                <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
               </select>
             </div>
@@ -187,7 +186,7 @@
               <label for="question10">Non-human animals are better to befriend than eat.</label>
               <select id="question10" class="form-control" required>
                 <option value="">Choose One</option>
-                <option value="1" selected>1 (Strongly Disagree)</option>
+                <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -227,23 +226,22 @@
   <script type="text/javascript">
 
     $('.submit').on('click', function(event) {
-      // event.preventDefault();
 
+      //  Force valid data for each form element via HTML5
       var validation = [];
       $('#new-user-form input, #new-user-form select').each(function() {
         console.log(this);
         if (!this.checkValidity()) {
-            validation.push(this);
-            return false;
+          validation.push(this);
+          return false;
         } 
       });
+
+      // When all form elements validate move on...
+      if (validation.length <= 0) {
       
-      if (validation.length > 0) {
-          console.log('validation.length > 0');
-        // event.preventDefault();
-      } else {
-          console.log('else validation.length');
-          
+        // Placing event.preventDefault() before validation confirmation
+        // would have prevented HTML5 validation from working
         event.preventDefault();
 
         var userScores = [];
@@ -257,20 +255,14 @@
           scores: userScores
         };
 
-          // console.log('newUser: ', newUser);
-
         $.post("/api/friends", newUser, function(bestMatchData) {
 
-            // console.log('POST newUser: ', newUser);
-            // console.log('bestMatchData: ', bestMatchData);
-
-            console.log('bestMatchData name: ', bestMatchData.name);
-            console.log('bestMatchData photoLink: ', bestMatchData.photoLink);
-
+          // Populate modal and display  
           $('#match-name').text(bestMatchData.name);
           $('#match-photo').attr('src', bestMatchData.photoLink);
           $('#friend-finder-match').modal('show');
 
+          // Clear previous form information
           $('#name').val('');
           $('#photo-link').val('');
           $('select').prop('selectedIndex','');

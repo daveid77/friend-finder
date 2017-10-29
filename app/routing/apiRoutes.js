@@ -16,25 +16,27 @@ module.exports = function(app) {
       scores[i] = +scores[i];
     }
 
+    // Need to invoke _findBestMatch() before data pushed
+    // to avoid current newUser data from matching itself 
     _findBestMatch(scores, friendsData);
 
     friendsData.push(req.body);
-       console.log('bestMatchData: ', bestMatchData);
+       // console.log('bestMatchData: ', bestMatchData);
     res.json(bestMatchData);
   })
 
 }
 
-var _findBestMatch = function(userScores, friendsData) { 
+var _findBestMatch = function( userScores, friendsData ) { 
 
   var scoreDiffs = [];
 
   for (var i=0; i < friendsData.length; i++) {
     var scores = friendsData[i].scores
 
-    scoreDiffs.push( compareScores(userScores, scores) )
+    scoreDiffs.push( compareScores( userScores, scores ) )
   }
-  console.log('DIFFS :: ', scoreDiffs)
+  // console.log('DIFFS :: ', scoreDiffs)
 
   var bestMatchIndex;
   var currentDiffValue = 0;
@@ -51,8 +53,8 @@ var _findBestMatch = function(userScores, friendsData) {
     }
   }
 
-  console.log(`Value ${currentDiffValue} at index ${bestMatchIndex} is best match`)
-  console.log('New Best Friend: ', friendsData[bestMatchIndex])
+  // console.log(`Value ${currentDiffValue} at index ${bestMatchIndex} is best match`)
+  // console.log('New Best Friend: ', friendsData[bestMatchIndex])
 
   bestMatchData = friendsData[bestMatchIndex];
 

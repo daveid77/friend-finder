@@ -23,11 +23,12 @@ npm install
 
 ## Misc Notes
 
-* Pushes to Github repo autodeploy to Heroku (sweet).
+* HTML5 validation of survey form elements, with event.preventDefault() not invoked until after validation complete (or it would have prevented HTML5 validation).
+* Github repo pushes autodeploy to Heroku.
 
 ## Shortcomings
 
-* No validation of photo link.
+* Didn't complete fully functioning app through the line until 10/29, a day and a half past deadline.
 
 ## Author
 
