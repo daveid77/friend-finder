@@ -27,9 +27,9 @@
           <h4 class="modal-title">Your Best Match</h4>
         </div>
         <div class="modal-body">
-          <h3 style="margin-top: 0;"><span id="match-name">Barbara Harris</span></h3>
-          <div style="width: 500px; height: 300px; overflow: hidden;">
-            <img src="http://images6.fanpop.com/image/photos/33200000/Freaky-Friday-1976-classic-movies-33202690-475-258.jpg" style="width: 500px; height: auto;">
+          <h3 style="margin-top: 0;"><span id="match-name"></span></h3>
+          <div style="width: 500px; height: 400px; overflow: hidden;">
+            <img id="match-photo" src="" style="width: 500px; height: auto;">
           </div>
           <!-- <p>As soon as we work out the kinks in the time machine, we'll set up an appointment for the two of you to hang out in the time period photographed.</p> -->
         </div>
@@ -43,23 +43,24 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
 
-        <a href="#" data-toggle="modal" data-target="#friend-finder-match">Modal Link</a>
+        <!-- <a href="#" data-toggle="modal" data-target="#friend-finder-match">Modal Link</a> -->
 
         <div class="jumbotron">
-          <h2>Survey</h2>
+          <h2 style="margin-top: 0;">Friend Finder Survey</h2>
           
-          <p>Help Us Find Your Ideal Time Machine Movie Star</p>
+          <p>Help Us Find Your Best Match</p>
 
           <hr noshade style="border-color: #999;">
 
-          <form role="form">
+          <p style="font-size: .95em; font-style: italic; color: #ff0000;">[All fields are required]</p>
+          <form role="form" id="new-user-form">
             <div class="form-group">
-              <label for="name">Name (Required)</label>
-              <input type="text" class="form-control" id="name" placeholder="Enter name" value="david" required>
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="user-name" placeholder="Enter name" value="" required>
             </div>
             <div class="form-group">
-              <label for="photo-link">Link to Photo (Required)</label>
-              <input type="url" class="form-control" id="photo-link" placeholder="Enter photo URL" value="https://pbs.twimg.com/profile_images/846504681291460609/5f-LaW8I_400x400.jpg" required>
+              <label for="photo-link">Link to Photo</label>
+              <input type="url" class="form-control" id="user-photo-link" placeholder="Enter photo URL" value="https://pbs.twimg.com/profile_images/846504681291460609/5f-LaW8I_400x400.jpg" required>
             </div>
 
             <hr noshade style="border-color: #999;">
@@ -71,7 +72,7 @@
                 <option value="">Choose One</option>
                 <option value="1">1 (Strongly Disagree)</option>
                 <option value="2">2</option>
-                <option value="3" selected>3</option>
+                <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5 (Strongly Agree)</option>
               </select>
@@ -226,30 +227,57 @@
   <script type="text/javascript">
 
     $('.submit').on('click', function(event) {
-      event.preventDefault();
+      // event.preventDefault();
 
-      var scores = [];
-      $('select').each(function() {
-        scores.push(parseInt($(this).val()));
+      var validation = [];
+      $('#new-user-form input, #new-user-form select').each(function() {
+        console.log(this);
+        if (!this.checkValidity()) {
+            validation.push(this);
+            return false;
+        } 
       });
+      
+      if (validation.length > 0) {
+          console.log('validation.length > 0');
+        // event.preventDefault();
+      } else {
+          console.log('else validation.length');
+          
+        event.preventDefault();
 
-      var newUser = {
-        name: $("#name").val().trim(),
-        photoLink: $("#photo-link").val().trim(),
-        scores: scores
-      };
+        var userScores = [];
+        $('select').each(function() {
+          userScores.push(parseInt($(this).val()));
+        });
 
-        console.log('newUser: ', newUser);
+        var newUser = {
+          name: $("#user-name").val().trim(),
+          photoLink: $("#user-photo-link").val().trim(),
+          scores: userScores
+        };
 
-      $.post("/api/friends", newUser, function(data) {
+          // console.log('newUser: ', newUser);
 
-          console.log('POST newUser: ', newUser);
+        $.post("/api/friends", newUser, function(bestMatchData) {
 
-        $('#name').val('');
-        $('#photo-link').val('');
-        $('select').prop('selectedIndex','');
+            // console.log('POST newUser: ', newUser);
+            // console.log('bestMatchData: ', bestMatchData);
 
-      });
+            console.log('bestMatchData name: ', bestMatchData.name);
+            console.log('bestMatchData photoLink: ', bestMatchData.photoLink);
+
+          $('#match-name').text(bestMatchData.name);
+          $('#match-photo').attr('src', bestMatchData.photoLink);
+          $('#friend-finder-match').modal('show');
+
+          $('#name').val('');
+          $('#photo-link').val('');
+          $('select').prop('selectedIndex','');
+
+        });
+
+      }
 
     });
 
