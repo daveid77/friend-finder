@@ -23,7 +23,7 @@ npm install
 
 ## Misc Notes
 
-* HTML5 validation of survey form elements, with event.preventDefault() not invoked until after validation complete (or it would have prevented HTML5 validation).
+* HTML5 validation of survey form elements, with event.preventDefault() not invoked until after validation complete, or it would have prevented HTML5 validation. I feel like it's handled elegantly, using an array for invalid form elements, but open to feedback. 
 * Github repo pushes autodeploy to Heroku.
 
 ## Shortcomings
