@@ -11,61 +11,63 @@ module.exports = function(app) {
   })
 
   app.post('/api/friends', function(req, res) {
-    var scores = req.body.scores;
-    for(var i = 0; i < scores.length; i++){
-      scores[i] = +scores[i];
+    var userScores = req.body.scores;
+    for(var i = 0; i < userScores.length; i++){
+      userScores[i] = +userScores[i];
     }
 
-    // Need to invoke _findBestMatch() before data pushed
-    // to avoid current newUser data from matching itself 
-    _findBestMatch(scores, friendsData);
+    // Invoke _findBestMatch() before friendsData.push()
+    // to avoid current newUser data matching itself 
+    _findBestMatch(userScores, friendsData);
 
+    // add new user data object to friendsData[]
     friendsData.push(req.body);
-       // console.log('bestMatchData: ', bestMatchData);
+
+    // return bestMatchData object to survey.html 
     res.json(bestMatchData);
   })
 
 }
 
-var _findBestMatch = function( userScores, friendsData ) { 
+var _findBestMatch = function(userScoresArr, friendsData) { 
 
   var scoreDiffs = [];
 
-  for (var i=0; i < friendsData.length; i++) {
-    var scores = friendsData[i].scores
-
-    scoreDiffs.push( compareScores( userScores, scores ) )
+  // Cycle through each friendsData object scores[], run compareScores() for each,
+  // and push score difference sums to scoreDiffs[]
+  for (var i = 0; i < friendsData.length; i++) {
+    currentFriendScoresArr = friendsData[i].scores;
+    scoreDiffs.push(compareScores(userScoresArr, currentFriendScoresArr));
   }
-  // console.log('DIFFS :: ', scoreDiffs)
 
   var bestMatchIndex;
   var currentDiffValue = 0;
 
-  for (var i=0; i<scoreDiffs.length; i++) {
+  // Find index of friendsData[] object with lowest scoreDiff 
+  for (var i = 0; i < scoreDiffs.length; i++) {
     if (i === 0) {
-      currentDiffValue = scoreDiffs[i]
-      bestMatchIndex = i
+      currentDiffValue = scoreDiffs[i];
+      bestMatchIndex = i;
     } else {
       if (currentDiffValue > scoreDiffs[i]) {
-        currentDiffValue = scoreDiffs[i]
-        bestMatchIndex = i
+        currentDiffValue = scoreDiffs[i];
+        bestMatchIndex = i;
       }
     }
   }
 
-  // console.log(`Value ${currentDiffValue} at index ${bestMatchIndex} is best match`)
-  // console.log('New Best Friend: ', friendsData[bestMatchIndex])
-
   bestMatchData = friendsData[bestMatchIndex];
 
-  function compareScores( userArray, friendsArray ) {
+  // Create absolute sums[] of each new user score 
+  // and current currentFriendScoresArr[] scores, reduce sums[] to total sum
+  function compareScores(userScoresArr, currentFriendScoresArr) {
     var sums = [];
-    for (var i=0; i < userArray.length; i++) {
-      sums.push(Math.abs( userArray[i] - friendsArray[i] ))
+    for (var i = 0; i < userScoresArr.length; i++) {
+      sums.push(Math.abs(userScoresArr[i] - currentFriendScoresArr[i]))
     }
-    return sums.reduce( function( sum, item ) {
-      sum += item
-      return sum
+    return sums.reduce(function(sum, item) {
+      sum += item;
+      return sum;
     }, 0 )
   }
 
